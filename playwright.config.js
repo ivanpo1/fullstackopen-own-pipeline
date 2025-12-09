@@ -76,6 +76,7 @@ export default defineConfig({
     command: 'cd server && npm run start:test',
     url: 'http://localhost:3003',
     reuseExistingServer: !process.env.CI,
+    cwd: './server'
   },
 });
 
