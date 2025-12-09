@@ -17,6 +17,7 @@
   "homepage": "https://github.com/ivanpo1/fullstackopen-own-pipeline#readme",
   "devDependencies": {
     "@playwright/test": "^1.57.0",
-    "@types/node": "^24.10.2"
+    "@types/node": "^24.10.2",
+    "cross-env": "^7.0.3"
   }
 }
