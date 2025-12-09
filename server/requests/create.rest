@@ -1,0 +1,31 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Hola",
+  "author": "Chau",
+  "url": "https://fullstackopen.com/",
+  "likes": 1
+}
+
+###
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "title": "How to cook pasta",
+  "author": "Don Pastalon",
+  "url": "https://pastainthenight.com/",
+  "likes": 15013
+}
+
+###
+
+POST http://localhost:3003/api/blogs/68adb50e8e6b0a54e380f877/comments
+Content-Type: application/json
+
+{
+  "comment": "Seems to be working"
+}

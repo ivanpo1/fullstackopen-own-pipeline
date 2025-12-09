@@ -1,0 +1,38 @@
+const mongoose = require('mongoose')
+
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    minlength: 4,
+    maxlength: 20,
+    validate: {
+      validator: function(v) {
+        return /^[a-zA-Z0-9._-]+$/.test(v)
+      },
+      message: `Password contains invalid characters. Use letters, numbers, underscores, and hyphens.`
+    }
+  },
+  name: String,
+  passwordHash: String,
+  blogs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Blog'
+    }
+  ],
+})
+
+userSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+    delete returnedObject.passwordHash
+  }
+})
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User

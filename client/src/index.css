@@ -1,0 +1,26 @@
+.notification.success {
+    color: green;
+    background: lightgreen;
+}
+.notification.error {
+    color: red;
+    background: lightgrey;
+}
+
+.notification {
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    background-color: lightgreen;
+}
+
+.extra {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
