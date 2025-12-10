@@ -32,7 +32,7 @@ jobs:
       - name: Build
         run: npm --prefix ./client run build
       - name: Test
-        run: npm --prefix ./client npm run test
+        run: npm --prefix ./client run test
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && env.SKIP_DEPLOYMENT_TAG == 'false' }}
         id: final
