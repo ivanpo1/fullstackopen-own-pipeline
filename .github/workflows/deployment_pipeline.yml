@@ -1,0 +1,62 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [ main ]
+    types: [ opened, synchronize ]
+
+env:
+  SKIP_DEPLOYMENT_TAG: ${{ contains(github.event.head_commit.message, '#skip') || contains(join(github.event.commits.*.message, ','), '#skip') }}
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-latest
+    outputs:
+      tag_release_can_run: ${{ steps.final.outcome == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Check style
+        run: npm run eslint
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm run test
+      - name: Trigger deployment
+        if: ${{ github.event_name == 'push' && env.SKIP_DEPLOYMENT_TAG == 'false' }}
+        id: final
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+      - name: Success Notification
+        if: ${{ success() }}
+        uses: hunghg255/action-notifications@master
+        with:
+          discord_webhook: ${{ secrets.DISCORD_WEBHOOK_MINE }}
+          title: "Deployment"
+      - name: Failure Notification
+        if: ${{ failure() }}
+        uses: hunghg255/action-notifications@master
+        with:
+          discord_webhook: ${{ secrets.DISCORD_WEBHOOK_MINE }}
+          title: "Deployment"
+  tag_release:
+    needs: [ simple_deployment_pipeline ]
+    runs-on: ubuntu-latest
+    if: ${{ needs.simple_deployment_pipeline.outputs.tag_release_can_run == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' }}
+        uses: anothrNick/github-tag-action@8c8163ef62cf9c4677c8e800f36270af27930f42
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
