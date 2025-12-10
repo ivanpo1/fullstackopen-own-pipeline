@@ -76,7 +76,13 @@ export default defineConfig({
     command: 'npm run start:test',
     url: 'http://localhost:3003',
     reuseExistingServer: !process.env.CI,
-    cwd: './server'
+    cwd: './server',
+    env: {
+      NODE_ENV: 'test',
+      MONGODB_URI: process.env.MONGODB_URI_TEST || 'mongodb://localhost:27017/test',
+      PORT: '3003',
+      SECRET: process.env.SECRET || 'test-secret',
+    }
   },
 });
 

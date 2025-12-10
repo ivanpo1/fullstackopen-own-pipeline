@@ -9,6 +9,11 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+      MONGODB_URI: ${{ secrets.MONGODB_URI_TEST }}
+      PORT: 3003
+      SECRET: ${{ secrets.SECRET }}
 
     steps:
     - uses: actions/checkout@v4

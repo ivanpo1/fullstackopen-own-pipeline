@@ -10,7 +10,6 @@ const cors = require("cors")
 const { join } = require("node:path")
 const app = express()
 
-logger.info("connection to", config.MONGODB_URI)
 
 mongoose
   .connect(config.MONGODB_URI)
