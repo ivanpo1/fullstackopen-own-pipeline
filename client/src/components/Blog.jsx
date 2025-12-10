@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
-import BlogForm from './BlogForm.jsx'
 
 const Blog = ({ blog, incrementLikes, deleteBlog, currentUser }) => {
   const [visible, setVisible] = useState(false)
-  const hideWhenVisible = { display: visible ? 'none' : '' }
+  // const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
@@ -43,6 +42,12 @@ Blog.propTypes = {
     likes: PropTypes.number.isRequired,
     author: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+    })
   }).isRequired,
   incrementLikes: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired,
