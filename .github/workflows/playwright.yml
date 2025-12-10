@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test
-      MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
       PORT: 3003
       SECRET: ${{ secrets.SECRET }}
 

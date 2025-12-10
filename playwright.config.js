@@ -79,7 +79,7 @@ export default defineConfig({
     cwd: './server',
     env: {
       NODE_ENV: 'test',
-      MONGODB_URI: process.env.MONGODB_URI_TEST || 'mongodb://localhost:27017/test',
+      TEST_MONGODB_URI: process.env.TEST_MONGODB_URI || 'mongodb://localhost:27017/test',
       PORT: '3003',
       SECRET: process.env.SECRET || 'test-secret',
     }
