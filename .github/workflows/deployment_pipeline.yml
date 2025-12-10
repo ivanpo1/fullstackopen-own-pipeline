@@ -25,12 +25,14 @@ jobs:
         run: npm --prefix ./server install
       - name: Install client dependencies
         run: npm --prefix ./client install
-      - name: Check style
-        run: npm run lint
+      - name: Check server style
+        run: npm --prefix ./server run lint
+      - name: Check client style
+        run: npm --prefix ./client run lint
       - name: Build
         run: npm --prefix ./client run build
       - name: Test
-        run: npm --prefix .client npm run test
+        run: npm --prefix ./client npm run test
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && env.SKIP_DEPLOYMENT_TAG == 'false' }}
         id: final
