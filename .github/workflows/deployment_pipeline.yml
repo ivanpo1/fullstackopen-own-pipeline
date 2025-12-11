@@ -16,6 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag_release_can_run: ${{ steps.final.outcome == 'success' }}
+    env:
+      NODE_ENV: test
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      PORT: 3003
+      SECRET: ${{ secrets.SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,6 +40,21 @@ jobs:
         run: npm --prefix ./client run test
       - name: Server Test
         run: npm --prefix ./server run test
+
+      ## Playwright
+      - name: Install root dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && env.SKIP_DEPLOYMENT_TAG == 'false' }}
         id: final
