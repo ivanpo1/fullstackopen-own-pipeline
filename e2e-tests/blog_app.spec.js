@@ -4,8 +4,8 @@ const { loginWith, createDefaultBlog } = require('./helper')
 
 describe('Blog app', () => {
   beforeEach(async ({ page, request }) => {
-    await request.post('http://localhost:5173/api/testing/reset')
-    await request.post('http://localhost:5173/api/users', {
+    await request.post('/api/testing/reset')
+    await request.post('/api/users', {
       data: {
         name: 'Ivan Testing',
         username: 'itesting',
@@ -13,7 +13,7 @@ describe('Blog app', () => {
       }
     })
 
-    await request.post('http://localhost:5173/api/users', {
+    await request.post('/api/users', {
       data: {
         name: 'Second Testing',
         username: 'secondtesting',
@@ -21,7 +21,7 @@ describe('Blog app', () => {
       }
     })
 
-    await page.goto('http://localhost:5173')
+    await page.goto('')
     await page.evaluate(() => {
       localStorage.clear()
       sessionStorage.clear()

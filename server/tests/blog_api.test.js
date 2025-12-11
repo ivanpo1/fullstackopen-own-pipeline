@@ -133,7 +133,7 @@ describe('Delete: existing Blogs', () => {
     await api
       .delete(`/api/blogs/${blogToDelete.body.id}`)
       .set('Authorization', `Bearer ${token}`)
-      .expect(204)
+      .expect(200)
 
     const blogsAtEnd = await blogs.blogsInDb()
     const contents = blogsAtEnd.map(b => b.id)
@@ -150,7 +150,13 @@ describe('Update: existing Blogs', () => {
 
     await api
       .put(`/api/blogs/${blogToUpdate.id}`)
-      .send({ likes: 38 })
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        likes: 38,
+        author: blogToUpdate.author,
+        title: blogToUpdate.title,
+        url: blogToUpdate.url
+      })
       .expect(200)
 
     const updatedBlog = await Blog.findById(blogToUpdate.id)

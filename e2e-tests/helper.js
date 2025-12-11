@@ -10,6 +10,7 @@ const createDefaultBlog = async (page, title = 'Default Blog') => {
   await page.locator('[aria-label="Author"]').fill('Testing purposes')
   await page.locator('[aria-label="Url"]').fill('url.testing.com')
   await page.getByRole('button', { name: 'create' }).click()
+  await page.locator('.notification.success').waitFor()
   await page.getByTestId('blog-title').getByText(title).waitFor()
 }
 

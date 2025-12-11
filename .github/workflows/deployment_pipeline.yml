@@ -31,8 +31,10 @@ jobs:
         run: npm --prefix ./client run lint
       - name: Build
         run: npm --prefix ./client run build
-      - name: Test
+      - name: Client Test
         run: npm --prefix ./client run test
+      - name: Server Test
+        run: npm --prefix ./server run test
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && env.SKIP_DEPLOYMENT_TAG == 'false' }}
         id: final
