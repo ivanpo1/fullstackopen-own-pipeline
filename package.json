@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test:e2e": "npx playwright test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ivanpo1/fullstackopen-own-pipeline.git"
@@ -17,6 +19,7 @@
   "homepage": "https://github.com/ivanpo1/fullstackopen-own-pipeline#readme",
   "devDependencies": {
     "@playwright/test": "^1.57.0",
-    "@types/node": "^24.10.2"
+    "@types/node": "^24.10.2",
+    "dotenv": "^17.2.3"
   }
 }
